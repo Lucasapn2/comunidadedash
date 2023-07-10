@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <style>
+        body {
+            background-color: #f2f2f2; /* Cor de fundo desejada */
+        }
+    </style>
+    <style>
+        .logo-sesc {
+            width: 300px; /* Ajuste o valor conforme necessário */
+            height: auto; /* Isso permite que a altura seja ajustada proporcionalmente à largura */
+        }
+
+        .logo-sesc img {
+            margin-right: 10px;
+        }
+
+        .logo-sesc,
+        h1 {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="logo-sesc">
+            <img src="{{ url_for('static', filename='logo_sesc.png') }}" alt="Logo do Sesc" class="logo-sesc">
+        </div>
+        <h1 style="color: Black; display: inline-block;">Base de Conhecimento Impressoras</h1>
+        <h3> <strong> Gerência de Tecnologia da Informação </strong> </h3>
+        <p>
+            Base de Conhecimento é o local destinado à construção e à manutenção do conhecimento relativo aos equipamentos de impressoras SESCDN Polo-Educacional.
+            Aqui você encontrará informações relevantes sobre os serviços de impressão fornecidos pela Gerência de Tecnologia da Informação do Departamento Nacional do Sesc.
+            Nossas páginas estão documentadas com o intuito de fornecer orientações, procedimentos e soluções para questões relacionadas ao uso, configuração e manutenção de impressoras.
+            Você poderá encontrar tutoriais, dicas, artigos técnicos e recursos úteis que o auxiliarão a otimizar o uso desses equipamentos.
+        </p>
+        <hr>
+
+        {% for post in posts %}
+            <div class="row border mt-4 p-3 meupost">
+                <div class="col col-3">
+                    <div class="image pe-2">
+                        <a href="{{ url_for('exibir_imagem', filename=post.autor.foto_perfil) }}" target="_blank">
+                            <img src="{{ url_for('static', filename='fotos_perfil/' + post.autor.foto_perfil) }}" class="rounded" width="200">
+                        </a>
+                    </div>
+                    <strong>{{ post.autor.username }}</strong>
+                    <div class="row justify-content-center">
+                        {% for curso in post.autor.cursos.split(';') %}
+                            <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col col-9">
+                    <a style="text-decoration: none; font-weight: {{ post.estilo_letra }}; color: {{ post.cor_fonte }};" href="{{ url_for('exibir_post', post_id=post.id) }}">
+                        <h3>{{ post.titulo }}</h3>
+                    </a>
+                    <p style="font-weight: {{ post.estilo_letra }}; color: {{ post.cor_fonte }}; white-space: pre-line;">{{ post.corpo }}</p>
+                    {% if post.imagem %}
+                        <a href="{{ url_for('exibir_imagem', filename=post.imagem) }}" target="_blank">
+                            <img src="{{ url_for('static', filename='fotos_post/' + post.imagem) }}" class="img-fluid mt-3">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

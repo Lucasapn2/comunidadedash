@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form method="POST" action="" class="border p-4 mt-2" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    <legend>Criar Post</legend>
+                    <fieldset>
+                        <div class="form-group">
+                            {{ form.titulo.label(class="form-control-label") }}
+                            {% if form.titulo.errors %}
+                                {{ form.titulo(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for erro in form.titulo.errors %}
+                                        {{ erro }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.titulo(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.corpo.label(class="form-control-label") }}
+                            {% if form.corpo.errors %}
+                                {{ form.corpo(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for erro in form.corpo.errors %}
+                                        {{ erro }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.corpo(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.estilo_letra.label(class="form-control-label") }}
+                            {{ form.estilo_letra(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.tamanho_fonte.label(class="form-control-label") }}
+                            {{ form.tamanho_fonte(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.cor_fonte.label(class="form-control-label") }}
+                            {{ form.cor_fonte(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.imagem.label(class="form-control-label") }}
+                            {% if form.imagem.errors %}
+                                {{ form.imagem(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for erro in form.imagem.errors %}
+                                        {{ erro }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.imagem(class="form-control-file") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    {{ form.botao_submit(class="btn btn-primary mt-2") }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
