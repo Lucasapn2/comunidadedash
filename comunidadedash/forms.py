@@ -26,9 +26,14 @@ class FormLogin(FlaskForm):
     botao_submit_login = SubmitField('Fazer Login')
 
 
+
 class FormEditarPerfil(FlaskForm):
     username = StringField('Nome de Usuário', validators=[DataRequired()])
     email = StringField('E-mail', validators=[DataRequired(), Email()])
+    nome_completo = StringField('Nome Completo')
+    data_nascimento = StringField('Data de Nascimento')
+    pais = StringField('País')
+    cidade = StringField('Cidade')
     foto_perfil = FileField('Atualizar Foto de Perfil', validators=[FileAllowed(['jpg', 'png'])])
     curso_excel = BooleanField('Excel Impressionador')
     curso_vba = BooleanField('VBA Impressionador')
@@ -43,7 +48,6 @@ class FormEditarPerfil(FlaskForm):
             usuario = Usuario.query.filter_by(email=email.data).first()
             if usuario:
                 raise ValidationError('Já existe um usuário com esse e-mail. Cadastre outro e-mail')
-
 
 class FormCriarPost(FlaskForm):
     titulo = StringField('Título do Post', validators=[DataRequired(), Length(2, 140)])
